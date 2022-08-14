@@ -80,3 +80,24 @@ app.put('/:id', (req, res) => {
     })
 })
 
+app.delete('/:id', (req, res) => {
+    const { id } = req.params;
+
+    if (id) {
+        console.log(`Deleting the id for: ${id}`)
+
+        // Only put in a value if it did not exist prior
+        if (fakeDB.hasOwnProperty(id)) {
+            delete fakeDB[id]
+
+            res.status(200).send({
+                result: fakeDB
+            })
+            return;
+        }
+    }
+
+    res.status(400).send({
+        result: `The id: ${id} provided was invalid`
+    })
+})

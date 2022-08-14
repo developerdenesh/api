@@ -57,3 +57,26 @@ app.post('/:id', (req, res) => {
     })
 })
 
+app.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const { message } = req.body;
+
+    if (id) {
+        console.log(`Updating the id for: ${id} with ${message}`)
+
+        // Only put in a value if it did not exist prior
+        if (fakeDB.hasOwnProperty(id)) {
+            fakeDB[id] = message
+
+            res.status(200).send({
+                result: fakeDB
+            })
+            return;
+        }
+    }
+
+    res.status(400).send({
+        result: `The id: ${id} provided was invalid`
+    })
+})
+
